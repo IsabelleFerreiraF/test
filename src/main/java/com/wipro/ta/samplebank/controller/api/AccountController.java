@@ -99,7 +99,7 @@ public class AccountController {
 					responseDTO.setMessage(ResponseMessage.SUCCESS);
 
 				} else {
-					responseDTO.setMessage(ResponseMessage.INVALID_AMMOUNT);
+					responseDTO.setMessage(ResponseMessage.INVALID_AMOUNT);
 				}
 
 			} else {
@@ -125,12 +125,15 @@ public class AccountController {
 		if (BusinessValidator.isCpfValid(ownerCpf)) {
 			if (accountManager.getAccount(ownerCpf) != null) {
 				if (BusinessValidator.isAmmountfValid(value)) {
-					accountManager.makeWithdraw(ownerCpf, value);
-					responseDTO.setData(new AccountDTO(accountManager.getAccount(ownerCpf)));
-					responseDTO.setMessage(ResponseMessage.SUCCESS);
-
+					if (accountManager.hasEnoughBalance(ownerCpf, value)) {
+						accountManager.makeWithdraw(ownerCpf, value);
+						responseDTO.setData(new AccountDTO(accountManager.getAccount(ownerCpf)));
+						responseDTO.setMessage(ResponseMessage.SUCCESS);
+					} else {
+						responseDTO.setMessage(ResponseMessage.INSUFFICIENT_BALANCE);
+					}
 				} else {
-					responseDTO.setMessage(ResponseMessage.INVALID_AMMOUNT);
+					responseDTO.setMessage(ResponseMessage.INVALID_AMOUNT);
 				}
 
 			} else {
@@ -162,7 +165,7 @@ public class AccountController {
 					responseDTO.setMessage(ResponseMessage.SUCCESS);
 
 				} else {
-					responseDTO.setMessage(ResponseMessage.INVALID_AMMOUNT);
+					responseDTO.setMessage(ResponseMessage.INVALID_AMOUNT);
 				}
 
 			} else {

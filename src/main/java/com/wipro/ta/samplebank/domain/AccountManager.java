@@ -59,6 +59,12 @@ public class AccountManager {
 		}
 	}
 
+	public boolean hasEnoughBalance(String cpf, String withdrawalValue) {
+		BigDecimal current = getAccountBalance(cpf);
+		BigDecimal withdrawal = new BigDecimal(withdrawalValue);
+		return current.compareTo(withdrawal) >= 0;
+	}
+
 	public BigDecimal getAccountBalance(String ownerCpf) {
 		Account c = accountRepository.findAccount(ownerCpf);
 		if (c != null) {

@@ -71,7 +71,7 @@ public class CreditController {
 					}
 
 				} else {
-					responseDTO.setMessage(ResponseMessage.INVALID_AMMOUNT);
+					responseDTO.setMessage(ResponseMessage.INVALID_AMOUNT);
 				}
 
 			} else {
